@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always"
+        android:paddingLeft="5dp"
+        android:queryHint="Search"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/search_view_rounded">
+
+
+    </item>
+
+
+
+
+</menu>
