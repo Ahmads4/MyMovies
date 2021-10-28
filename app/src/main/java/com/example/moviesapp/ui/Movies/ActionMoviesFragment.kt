@@ -1,4 +1,4 @@
-package com.example.moviesapp.ui.Fragments
+package com.example.moviesapp.ui.Movies
 
 import android.os.Bundle
 import android.view.*
@@ -8,25 +8,23 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviesapp.R
-import com.example.moviesapp.databinding.FragmentMoviesFavoritesBinding
-import com.example.moviesapp.data.local.MoviesFav
 import com.example.moviesapp.data.MoviesResults
-import com.example.moviesapp.ui.ViewModels.DaoViewModel
+import com.example.moviesapp.data.local.MoviesFav
+import com.example.moviesapp.databinding.FragmentActionMoviesBinding
+import com.example.moviesapp.ui.Favorites.DaoViewModel
 import com.example.moviesapp.ui.MovieApiStatus
-import com.example.moviesapp.ui.Adapters.MoviesFavoritesAdapter
 import com.example.moviesapp.ui.MoviesListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MoviesFavorites : Fragment(R.layout.fragment_movies_favorites),
-    MoviesFavoritesAdapter.OnItemClickListener {
+class ActionMoviesFragment : Fragment(R.layout.fragment_action_movies),
+    MoviesListAdapter.OnItemClickListener {
 
     private val viewModel by viewModels<MoviesListViewModel>()
     private val daoViewModel by viewModels<DaoViewModel>()
-    private var _binding: FragmentMoviesFavoritesBinding? = null
+    private var _binding: FragmentActionMoviesBinding? = null
     private val binding get() = _binding!!
 
 
@@ -35,34 +33,39 @@ class MoviesFavorites : Fragment(R.layout.fragment_movies_favorites),
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movies_favorites, container, false)
-
-
+        return inflater.inflate(R.layout.fragment_action_movies, container, false)
     }
+
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding = FragmentMoviesFavoritesBinding.bind(view)
+        _binding = FragmentActionMoviesBinding.bind(view)
+
+        val adapter = MoviesListAdapter(this, daoViewModel)
 
 
-        val adapter = MoviesFavoritesAdapter(this)
-
-
-        //Observe movies
-        daoViewModel.favMovies.observe(viewLifecycleOwner) {
+       //Observe movies
+        viewModel.moviesAction.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+
         }
+
 
         //Observe network state
         viewModel.networkState.observe(viewLifecycleOwner, {
-            binding.progressBar.isVisible = if (it == MovieApiStatus.LOADING) true else view.isGone
-            binding.errorTextView.isVisible = if (it == MovieApiStatus.ERROR) true else view.isGone
-            binding.recyclerView.isVisible = if (it == MovieApiStatus.DONE) true else view.isGone
-
+            binding.errorTextView.isVisible = if(it==MovieApiStatus.ERROR) true else view.isGone
+            binding.recyclerView.isVisible =  if(it==MovieApiStatus.DONE) true else view.isGone
 
         })
+
+        //Observe list of IDs
+        daoViewModel.idList.observe(viewLifecycleOwner) {
+        }
+
+
 
         binding.apply {
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -76,6 +79,7 @@ class MoviesFavorites : Fragment(R.layout.fragment_movies_favorites),
     }
 
 
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
@@ -87,13 +91,24 @@ class MoviesFavorites : Fragment(R.layout.fragment_movies_favorites),
 
     override fun onItemClick(movie: MoviesResults.Movies) {
         val action =
-            MoviesFavoritesDirections.actionMoviesFavoritesToMoviesDetailsFavoritesFragment22(movie)
+            ActionMoviesFragmentDirections.actionActionMoviesFragmentToMoviesDetailsFragment(movie)
+
         findNavController().navigate(action)
+    }
+
+    override fun onFavoriteClick(fav: MoviesFav) {
+        daoViewModel.addMovieToFavs(fav)
     }
 
     override fun onDeleteClick(fav: MoviesFav) {
         daoViewModel.deleteMovieFromFavs(fav)
     }
+
+
+
+
+
+
 
 
 }

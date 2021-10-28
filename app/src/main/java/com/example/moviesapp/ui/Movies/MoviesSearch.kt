@@ -1,4 +1,4 @@
-package com.example.moviesapp.ui.Fragments
+package com.example.moviesapp.ui.Movies
 
 import android.os.Bundle
 import android.view.*
@@ -11,11 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviesapp.R
-import com.example.moviesapp.databinding.FragmentMoviesSearchBinding
-import com.example.moviesapp.data.local.MoviesFav
 import com.example.moviesapp.data.MoviesResults
-import com.example.moviesapp.ui.Adapters.MoviesListAdapter
-import com.example.moviesapp.ui.ViewModels.DaoViewModel
+import com.example.moviesapp.data.local.MoviesFav
+import com.example.moviesapp.databinding.FragmentMoviesSearchBinding
+import com.example.moviesapp.ui.Favorites.DaoViewModel
 import com.example.moviesapp.ui.MovieApiStatus
 import com.example.moviesapp.ui.MoviesListViewModel
 import com.zhuinden.livedatacombinetuplekt.combineTuple
@@ -24,14 +23,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MoviesSearch : Fragment(R.layout.fragment_movies_search),
     MoviesListAdapter.OnItemClickListener {
-
     private val args: MoviesSearchArgs by navArgs()
     private val daoViewModel by viewModels<DaoViewModel>()
     private val viewModel by viewModels<MoviesListViewModel>()
     private var _binding: FragmentMoviesSearchBinding? = null
     private val binding get() = _binding!!
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +35,6 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movies_search, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,22 +45,16 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
 
         viewModel.searchMovies(args.searchTerm)
         val adapter = MoviesListAdapter(this, daoViewModel)
-
-
         //Observe movies
         viewModel.moviesSearchResults.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-
         //Based on network state, display list of movies
         viewModel.networkState.observe(viewLifecycleOwner, {
             binding.progressBar.isVisible = if (it == MovieApiStatus.LOADING) true else view.isGone
             binding.errorTextView.isVisible = if (it == MovieApiStatus.ERROR) true else view.isGone
             binding.recyclerView.isVisible = if (it == MovieApiStatus.DONE) true else view.isGone
-
         })
-
-
         //Combine the two livedata to set conditions for the no results text
         combineTuple(viewModel.moviesSearchResults, viewModel.networkState).observe(
             viewLifecycleOwner
@@ -76,8 +65,6 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
                     MovieApiStatus.DONE
                 )
         }
-
-
         //Observe the list of ids
         daoViewModel.idList.observe(viewLifecycleOwner) {
         }
@@ -88,21 +75,17 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
             //Disable animations
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
-
         }
 
 
 
         setHasOptionsMenu(true)
-
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
         inflater.inflate(R.menu.search_gallery, menu)
-
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
 
@@ -111,33 +94,25 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-
-
                 if (query != null) {
                     //Search functionality based on query
                     viewModel.searchMovies(query)
                     searchView.clearFocus()
                 }
                 return true
-
-
             }
-
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 return true
             }
-
         })
-
-
     }
 
     override fun onItemClick(movie: MoviesResults.Movies) {
-        val action = MoviesSearchDirections.actionMoviesSearchToMoviesDetailsFragment(movie)
+        val action = MoviesSearchDirections.actionMoviesSearchToMoviesDetailsFragment(
+            movie
+        )
         findNavController().navigate(action)
-
-
     }
 
     override fun onFavoriteClick(fav: MoviesFav) {
@@ -147,8 +122,6 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
     override fun onDeleteClick(fav: MoviesFav) {
         daoViewModel.deleteMovieFromFavs(fav)
     }
-
-
 }
 
 

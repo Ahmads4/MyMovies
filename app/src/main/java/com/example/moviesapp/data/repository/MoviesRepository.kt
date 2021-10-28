@@ -1,7 +1,10 @@
-package com.example.moviesapp.data.remote
+package com.example.moviesapp.data.repository
 
 import com.example.moviesapp.BuildConfig
 import com.example.moviesapp.data.MoviesResults
+import com.example.moviesapp.data.remote.MEDIA_TYPE
+import com.example.moviesapp.data.remote.MoviesApi
+import com.example.moviesapp.data.remote.TIME_WINDOW
 import javax.inject.Inject
 import javax.inject.Singleton
 

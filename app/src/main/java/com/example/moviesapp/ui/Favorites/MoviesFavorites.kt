@@ -1,4 +1,4 @@
-package com.example.moviesapp.ui.Fragments
+package com.example.moviesapp.ui.Favorites
 
 import android.os.Bundle
 import android.view.*
@@ -9,23 +9,21 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviesapp.R
-import com.example.moviesapp.databinding.FragmentRomanceMoviesBinding
-import com.example.moviesapp.data.local.MoviesFav
 import com.example.moviesapp.data.MoviesResults
-import com.example.moviesapp.ui.Adapters.MoviesListAdapter
-import com.example.moviesapp.ui.ViewModels.DaoViewModel
+import com.example.moviesapp.data.local.MoviesFav
+import com.example.moviesapp.databinding.FragmentMoviesFavoritesBinding
 import com.example.moviesapp.ui.MovieApiStatus
 import com.example.moviesapp.ui.MoviesListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class RomanceMoviesFragment : Fragment(R.layout.fragment_romance_movies),
-    MoviesListAdapter.OnItemClickListener {
+class MoviesFavorites : Fragment(R.layout.fragment_movies_favorites),
+    MoviesFavoritesAdapter.OnItemClickListener {
 
     private val viewModel by viewModels<MoviesListViewModel>()
     private val daoViewModel by viewModels<DaoViewModel>()
-    private var _binding: FragmentRomanceMoviesBinding? = null
+    private var _binding: FragmentMoviesFavoritesBinding? = null
     private val binding get() = _binding!!
 
 
@@ -34,22 +32,24 @@ class RomanceMoviesFragment : Fragment(R.layout.fragment_romance_movies),
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_romance_movies, container, false)
+        return inflater.inflate(R.layout.fragment_movies_favorites, container, false)
+
+
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding = FragmentRomanceMoviesBinding.bind(view)
+        _binding = FragmentMoviesFavoritesBinding.bind(view)
 
-        val adapter = MoviesListAdapter(this, daoViewModel)
+
+        val adapter = MoviesFavoritesAdapter(this)
 
 
         //Observe movies
-        viewModel.moviesRomance.observe(viewLifecycleOwner) {
+        daoViewModel.favMovies.observe(viewLifecycleOwner) {
             adapter.submitList(it)
-
         }
 
         //Observe network state
@@ -58,12 +58,8 @@ class RomanceMoviesFragment : Fragment(R.layout.fragment_romance_movies),
             binding.errorTextView.isVisible = if (it == MovieApiStatus.ERROR) true else view.isGone
             binding.recyclerView.isVisible = if (it == MovieApiStatus.DONE) true else view.isGone
 
+
         })
-
-        //Observe list of ids
-        daoViewModel.idList.observe(viewLifecycleOwner) {
-        }
-
 
         binding.apply {
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -87,13 +83,10 @@ class RomanceMoviesFragment : Fragment(R.layout.fragment_romance_movies),
     }
 
     override fun onItemClick(movie: MoviesResults.Movies) {
-        val action =
-            RomanceMoviesFragmentDirections.actionRomanceMoviesFragmentToMoviesDetailsFragment(movie)
+        val action = MoviesFavoritesDirections.actionMoviesFavoritesToMoviesDetailsFavoritesFragment22(
+                movie
+            )
         findNavController().navigate(action)
-    }
-
-    override fun onFavoriteClick(fav: MoviesFav) {
-        daoViewModel.addMovieToFavs(fav)
     }
 
     override fun onDeleteClick(fav: MoviesFav) {

@@ -16,8 +16,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class) //Tells Dagger that we need the methods for the entirety of the app
 object AppModule {
     //These methods are never used, just instructions for Dagger
-
-
     //Method that tells Dagger how to create a Retrofit object
     @Provides
     @Singleton

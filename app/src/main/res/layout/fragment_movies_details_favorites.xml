@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:theme="@style/Theme.MoviesApp"
-    tools:context=".ui.Fragments.MoviesDetailsFavoritesFragment"
+    tools:context=".ui.Favorites.MoviesDetailsFavoritesFragment"
     >
 
 

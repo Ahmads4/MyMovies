@@ -1,5 +1,7 @@
-package com.example.moviesapp.data.local
+package com.example.moviesapp.data.repository
 
+import com.example.moviesapp.data.local.MovieDao
+import com.example.moviesapp.data.local.MoviesFav
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import kotlin.properties.Delegates

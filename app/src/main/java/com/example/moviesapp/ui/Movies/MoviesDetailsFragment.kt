@@ -1,4 +1,4 @@
-package com.example.moviesapp.ui.Fragments
+package com.example.moviesapp.ui.Movies
 
 import android.os.Bundle
 import android.view.View
@@ -8,33 +8,28 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.moviesapp.R
-import com.example.moviesapp.databinding.FragmentMoviesDetailsFavoritesBinding
-import com.example.moviesapp.data.local.MoviesFav
 import com.example.moviesapp.data.MoviesResults
-import com.example.moviesapp.ui.Adapters.IMAGE_BASE_URL
-import com.example.moviesapp.ui.ViewModels.DaoViewModel
-
+import com.example.moviesapp.data.local.MoviesFav
+import com.example.moviesapp.databinding.FragmentMoviesDetailsBinding
+import com.example.moviesapp.ui.Favorites.DaoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MoviesDetailsFavoritesFragment : Fragment(R.layout.fragment_movies_details_favorites) {
+class MoviesDetailsFragment() : Fragment(R.layout.fragment_movies_details) {
 
 
-    private val args by navArgs<MoviesDetailsFavoritesFragmentArgs>()
+    //We can get the movies from the args property
+    private val args by navArgs<MoviesDetailsFragmentArgs>()
     private val daoViewModel by viewModels<DaoViewModel>()
     private fun showToast(string: String) {
         Toast.makeText(view?.context, string, Toast.LENGTH_SHORT).show()
 
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentMoviesDetailsFavoritesBinding.bind(view)
-
-
-
+        val binding = FragmentMoviesDetailsBinding.bind(view)
 
 
         binding.apply {
@@ -49,10 +44,8 @@ class MoviesDetailsFavoritesFragment : Fragment(R.layout.fragment_movies_details
                 movie.original_language,
                 movie.isFavorite,
             )
-
-
             //When you are in fragment/activity, pass it to a glide.with because view is less efficient
-            Glide.with(this@MoviesDetailsFavoritesFragment)
+            Glide.with(this@MoviesDetailsFragment)
                 .load(IMAGE_BASE_URL + movie.poster_path)
                 //Have the textview visible only when image is visible
                 .error(R.drawable.ic_baseline_error_outline_24)
@@ -64,19 +57,26 @@ class MoviesDetailsFavoritesFragment : Fragment(R.layout.fragment_movies_details
             language.text = movie.original_language
             rating.text = movie.vote_average
             plot.text = movie.overview
-           favCheckbox.isChecked = true
 
+            daoViewModel.getValue(movie.id)
 
+            daoViewModel.checkBoxValue.observe(viewLifecycleOwner) {
+                favCheckbox.isChecked = it ?: false
 
-
-
+            }
 
 
 
             favCheckbox.setOnClickListener {
 
 
-               if(!favCheckbox.isChecked)  {
+                if (favCheckbox.isChecked) {
+
+                    fav.isFavorite = true
+                    daoViewModel.addMovieToFavs(fav)
+                    showToast("${fav.title} is added to your favorites")
+
+                } else {
 
                     fav.isFavorite = false
                     daoViewModel.deleteMovieFromFavs(fav)

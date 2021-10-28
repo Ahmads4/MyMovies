@@ -6,14 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:theme="@style/Theme.MoviesApp"
-    tools:context=".ui.Fragments.MoviesDetailsFavoritesFragment"
+    tools:context=".ui.Favorites.MoviesDetailsFavoritesFragment"
     >
 
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="65dp">
 

@@ -1,4 +1,4 @@
-package com.example.moviesapp.ui.Fragments
+package com.example.moviesapp.ui.Movies
 
 import android.os.Bundle
 import android.view.*
@@ -8,13 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide.init
 import com.example.moviesapp.R
-import com.example.moviesapp.databinding.FragmentMoviesListBinding
-import com.example.moviesapp.data.local.MoviesFav
 import com.example.moviesapp.data.MoviesResults
-import com.example.moviesapp.ui.Adapters.MoviesListAdapter
-import com.example.moviesapp.ui.ViewModels.DaoViewModel
+import com.example.moviesapp.data.local.MoviesFav
+import com.example.moviesapp.databinding.FragmentMoviesListBinding
+import com.example.moviesapp.ui.Favorites.DaoViewModel
 import com.example.moviesapp.ui.MovieApiStatus
 import com.example.moviesapp.ui.MoviesListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,8 +79,9 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list),
     }
 
     override fun onItemClick(movie: MoviesResults.Movies) {
-        val action =
-            MoviesListFragmentDirections.actionMoviesListFragmentToMoviesDetailsFragment(movie)
+        val action = MoviesListFragmentDirections.actionMoviesListFragmentToMoviesDetailsFragment(
+                movie
+            )
         findNavController().navigate(action)
 
 

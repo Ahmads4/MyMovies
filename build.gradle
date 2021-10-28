@@ -2,13 +2,15 @@
 buildscript {
     ext.kotlin_version = "1.5.20"
     ext.hilt_version = '2.35'
-    ext.nav_version = "2.4.0-alpha08"
+    ext.nav_version = "2.4.0-alpha10"
     ext.room_version = "2.3.0"
     ext.dataStoreVersion = "1.0.0-alpha02"
 
     repositories {
         google()
         mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.2"

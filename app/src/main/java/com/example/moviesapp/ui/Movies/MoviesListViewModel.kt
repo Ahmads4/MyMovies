@@ -2,7 +2,7 @@ package com.example.moviesapp.ui
 
 import androidx.lifecycle.*
 import com.example.moviesapp.data.MoviesResults
-import com.example.moviesapp.data.remote.MoviesRepository
+import com.example.moviesapp.data.repository.MoviesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

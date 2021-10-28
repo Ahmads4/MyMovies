@@ -1,4 +1,4 @@
-package com.example.moviesapp.ui.Adapters
+package com.example.moviesapp.ui.Movies
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.example.moviesapp.R
 import com.example.moviesapp.data.MoviesResults
 import com.example.moviesapp.data.local.MoviesFav
 import com.example.moviesapp.databinding.MovieLayoutBinding
-import com.example.moviesapp.ui.ViewModels.DaoViewModel
+import com.example.moviesapp.ui.Favorites.DaoViewModel
 
 val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
 

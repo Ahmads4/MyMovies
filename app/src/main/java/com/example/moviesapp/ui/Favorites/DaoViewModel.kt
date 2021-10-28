@@ -1,8 +1,8 @@
-package com.example.moviesapp.ui.ViewModels
+package com.example.moviesapp.ui.Favorites
 
 import androidx.lifecycle.*
 import com.example.moviesapp.data.local.MoviesFav
-import com.example.moviesapp.data.local.MoviesFavoritesRepository
+import com.example.moviesapp.data.repository.MoviesFavoritesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
