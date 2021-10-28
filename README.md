@@ -4,10 +4,10 @@ A simple Android project using modern Android development tools and libraries.
 ## Screenshots
 
  <p float="left">
-  <img src="app/src/main/res/drawable-180dpi/Trending.png" alt= "Trending" width="150"  /> &nbsp;
-  <img src="app/src/main/res/drawable-180dpi/Discover.png" alt="Discover" width="150" /> &nbsp;
-  <img src="app/src/main/res/drawable-180dpi/Favorites.png" alt="Favorites" width="150" /> &nbsp;
-  <img src="app/src/main/res/drawable-180dpi/Details.png" alt="Details" width="150" /> &nbsp;
+  <img src="https://user-images.githubusercontent.com/75928243/133933553-ae709c70-aa7c-4cd5-af03-abc8fd545d30.jpeg" alt= "Trending" width="150"  /> &nbsp;
+  <img src="https://user-images.githubusercontent.com/75928243/133933551-986246c4-715a-4d0c-a72c-cd6f4f457e8d.jpeg" alt="Discover" width="150" /> &nbsp;
+  <img src="https://user-images.githubusercontent.com/75928243/133933552-7e65eab5-eaee-4bd3-9f8f-add5880c6830.jpeg" alt="Favorites" width="150" /> &nbsp;
+  <img src="https://user-images.githubusercontent.com/75928243/133933554-92b8f143-e8f0-4f59-ac71-851afa5e84e3.jpeg" alt="Details" width="150" /> &nbsp;
 </p>
 
 
@@ -20,7 +20,7 @@ A movies app where the user can browse movies based on different categories, dis
 
 This application is done with the [model-view-viewmodel (MVVM) architecture](https://developer.android.com/jetpack/guide).
 
-<img src="app/src/main/res/drawable-180dpi/MVVM.png" alt="Details" width="700" />
+<img src="https://user-images.githubusercontent.com/75928243/133933578-ebba9b46-8e21-4700-80ee-13dbd335aa9b.png" alt="MVVM Architecture" width="700" />
 
 
 
