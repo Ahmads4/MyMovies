@@ -56,6 +56,7 @@ class ActionMoviesFragment : Fragment(R.layout.fragment_action_movies),
 
         //Observe network state
         viewModel.networkState.observe(viewLifecycleOwner, {
+            binding.progressBar.isVisible = if (it == MovieApiStatus.LOADING) true else view.isGone
             binding.errorTextView.isVisible = if(it==MovieApiStatus.ERROR) true else view.isGone
             binding.recyclerView.isVisible =  if(it==MovieApiStatus.DONE) true else view.isGone
 
