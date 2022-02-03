@@ -51,7 +51,6 @@ class RomanceMoviesFragment : Fragment(R.layout.fragment_romance_movies),
         daoViewModel.idList.observe(viewLifecycleOwner) {
         }
 
-
         binding.apply {
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
             //Disable animations

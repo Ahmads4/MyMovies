@@ -9,24 +9,21 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviesapp.R
-import com.example.moviesapp.databinding.FragmentHorrorMoviesBinding
-import com.example.moviesapp.data.local.MoviesFav
 import com.example.moviesapp.data.MoviesResults
+import com.example.moviesapp.data.local.MoviesFav
+import com.example.moviesapp.databinding.FragmentHorrorMoviesBinding
 import com.example.moviesapp.ui.Favorites.DaoViewModel
 import com.example.moviesapp.ui.MovieApiStatus
 import com.example.moviesapp.ui.MoviesListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class HorrorMoviesFragment : Fragment(R.layout.fragment_horror_movies),
     MoviesListAdapter.OnItemClickListener {
-
     private val viewModel by viewModels<MoviesListViewModel>()
     private val daoViewModel by viewModels<DaoViewModel>()
     private var _binding: FragmentHorrorMoviesBinding? = null
     private val binding get() = _binding!!
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,31 +32,21 @@ class HorrorMoviesFragment : Fragment(R.layout.fragment_horror_movies),
         return inflater.inflate(R.layout.fragment_horror_movies, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentHorrorMoviesBinding.bind(view)
-
         val adapter = MoviesListAdapter(this, daoViewModel)
-
-
         //Observe movies
         viewModel.moviesHorror.observe(viewLifecycleOwner) {
             adapter.submitList(it)
-
-
         }
         //Observe network state
-        viewModel.networkState.observe(viewLifecycleOwner, {
+        viewModel.networkState.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = if (it == MovieApiStatus.LOADING) true else view.isGone
             binding.errorTextView.isVisible = if (it == MovieApiStatus.ERROR) true else view.isGone
             binding.recyclerView.isVisible = if (it == MovieApiStatus.DONE) true else view.isGone
-
-
-        })
-
-
+        }
         //Observe list of ids
         daoViewModel.idList.observe(viewLifecycleOwner) {
         }
@@ -70,26 +57,18 @@ class HorrorMoviesFragment : Fragment(R.layout.fragment_horror_movies),
             //Disable animations
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
-
         }
-
-
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-
         // Inflate the gallery menu
         inflater.inflate(R.menu.menu_gallery, menu)
-
-
     }
 
     override fun onItemClick(movie: MoviesResults.Movies) {
         val action =
-           HorrorMoviesFragmentDirections.actionHorrorMoviesFragmentToMoviesDetailsFragment(movie)
-
+            HorrorMoviesFragmentDirections.actionHorrorMoviesFragmentToMoviesDetailsFragment(movie)
         findNavController().navigate(action)
     }
 
@@ -100,6 +79,4 @@ class HorrorMoviesFragment : Fragment(R.layout.fragment_horror_movies),
     override fun onDeleteClick(fav: MoviesFav) {
         daoViewModel.deleteMovieFromFavs(fav)
     }
-
-
 }

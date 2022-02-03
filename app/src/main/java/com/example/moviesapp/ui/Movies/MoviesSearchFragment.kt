@@ -21,9 +21,9 @@ import com.zhuinden.livedatacombinetuplekt.combineTuple
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MoviesSearch : Fragment(R.layout.fragment_movies_search),
+class MoviesSearchFragment : Fragment(R.layout.fragment_movies_search),
     MoviesListAdapter.OnItemClickListener {
-    private val args: MoviesSearchArgs by navArgs()
+    private val args: MoviesSearchFragmentArgs by navArgs()
     private val daoViewModel by viewModels<DaoViewModel>()
     private val viewModel by viewModels<MoviesListViewModel>()
     private var _binding: FragmentMoviesSearchBinding? = null
@@ -38,11 +38,7 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         _binding = FragmentMoviesSearchBinding.bind(view)
-
-
-
         viewModel.searchMovies(args.searchTerm)
         val adapter = MoviesListAdapter(this, daoViewModel)
         //Observe movies
@@ -50,11 +46,11 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
             adapter.submitList(it)
         }
         //Based on network state, display list of movies
-        viewModel.networkState.observe(viewLifecycleOwner, {
+        viewModel.networkState.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = if (it == MovieApiStatus.LOADING) true else view.isGone
             binding.errorTextView.isVisible = if (it == MovieApiStatus.ERROR) true else view.isGone
             binding.recyclerView.isVisible = if (it == MovieApiStatus.DONE) true else view.isGone
-        })
+        }
         //Combine the two livedata to set conditions for the no results text
         combineTuple(viewModel.moviesSearchResults, viewModel.networkState).observe(
             viewLifecycleOwner
@@ -69,15 +65,12 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
         daoViewModel.idList.observe(viewLifecycleOwner) {
         }
 
-
         binding.apply {
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
             //Disable animations
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
         }
-
-
 
         setHasOptionsMenu(true)
     }
@@ -88,9 +81,6 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
         inflater.inflate(R.menu.search_gallery, menu)
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
-
-
-
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -109,7 +99,7 @@ class MoviesSearch : Fragment(R.layout.fragment_movies_search),
     }
 
     override fun onItemClick(movie: MoviesResults.Movies) {
-        val action = MoviesSearchDirections.actionMoviesSearchToMoviesDetailsFragment(
+        val action = MoviesSearchFragmentDirections.actionMoviesSearchToMoviesDetailsFragment(
             movie
         )
         findNavController().navigate(action)

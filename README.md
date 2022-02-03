@@ -4,12 +4,13 @@ A simple Android project using modern Android development tools and libraries.
 ## Screenshots
 
  <p float="left">
-  <img src="https://user-images.githubusercontent.com/75928243/133933553-ae709c70-aa7c-4cd5-af03-abc8fd545d30.jpeg" alt= "Trending" width="150"  /> &nbsp;
-  <img src="https://user-images.githubusercontent.com/75928243/133933551-986246c4-715a-4d0c-a72c-cd6f4f457e8d.jpeg" alt="Discover" width="150" /> &nbsp;
-  <img src="https://user-images.githubusercontent.com/75928243/133933552-7e65eab5-eaee-4bd3-9f8f-add5880c6830.jpeg" alt="Favorites" width="150" /> &nbsp;
-  <img src="https://user-images.githubusercontent.com/75928243/133933554-92b8f143-e8f0-4f59-ac71-851afa5e84e3.jpeg" alt="Details" width="150" /> &nbsp;
+  <img src="app/src/main/res/drawable/trending.jpeg" alt= "Trending" width="150"  /> &nbsp;
+  <img src="app/src/main/res/drawable/discover.jpeg" alt="Discover" width="150" /> &nbsp;
+  <img src="app/src/main/res/drawable/detailsimage.jpeg" alt="Details Image" width="150" /> &nbsp;
+  <img src="app/src/main/res/drawable/details.jpeg" alt="Details" width="150" /> &nbsp;
+  <img src="app/src/main/res/drawable/castdetails.jpeg" alt="Cast Details" width="150" /> &nbsp;
+  <img src="app/src/main/res/drawable/favorites.jpeg" alt="Favorites" width="150" /> &nbsp;
 </p>
-
 
 
 ## About
@@ -36,8 +37,6 @@ This application is done with the [model-view-viewmodel (MVVM) architecture](htt
 * [Room](https://developer.android.com/training/data-storage/room) - Holds the favorite movies data
 * [Coroutines](https://developer.android.com/kotlin/coroutines) - Used to access the API and the local database under the hood
 * [Dependency Injection using Dagger-Hilt](https://developer.android.com/training/dependency-injection/) - Inject dependencies in the classes
-
-
 
 
 ## API

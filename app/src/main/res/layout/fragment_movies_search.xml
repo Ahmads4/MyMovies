@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/Theme.MoviesApp"
-    tools:context=".ui.Movies.MoviesSearch">
+    tools:context=".ui.Movies.MoviesSearchFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

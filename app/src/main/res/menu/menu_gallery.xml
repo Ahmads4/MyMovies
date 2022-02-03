@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <item
@@ -14,7 +13,7 @@
         android:title="Search" />
 
     <item
-        android:id="@+id/moviesFavorites"
+        android:id="@+id/moviesFavoritesFragment"
         android:icon="@drawable/ic_baseline_favorite_border_24"
         android:title="Favorites" />
 

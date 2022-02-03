@@ -34,7 +34,6 @@ class ScifiMoviesFragment : Fragment(R.layout.fragment_scifi_movies),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         _binding = FragmentScifiMoviesBinding.bind(view)
         val adapter = MoviesListAdapter(this, daoViewModel)
         //Observe movies
@@ -50,8 +49,6 @@ class ScifiMoviesFragment : Fragment(R.layout.fragment_scifi_movies),
         //Observe list of ids
         daoViewModel.idList.observe(viewLifecycleOwner) {
         }
-
-
         binding.apply {
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
             //Disable animations

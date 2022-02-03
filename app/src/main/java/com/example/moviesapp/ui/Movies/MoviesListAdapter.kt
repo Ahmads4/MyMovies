@@ -20,28 +20,19 @@ class MoviesListAdapter constructor(
     daoViewModel: DaoViewModel,
 ) :
     ListAdapter<MoviesResults.Movies, MoviesListAdapter.MoviesListViewHolder>(DiffCallback) {
-
     private lateinit var fav: MoviesFav
     private val idList: List<Int>? = daoViewModel.idList.value
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {
         val binding = MovieLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
-
         return MoviesListViewHolder(binding)
     }
 
-
     override fun onBindViewHolder(holder: MoviesListViewHolder, position: Int) {
         val currentItem = getItem(position)
-
-
         //Set the checkbox value to the isFavorite boolean value based on movie id
         if (idList != null) {
             holder.binding.favoritesCheckbox.isChecked = idList.contains(currentItem.id)
         }
-
 
         holder.binding.favoritesCheckbox.setOnCheckedChangeListener { _, isChecked ->
             currentItem.isFavorite
@@ -51,20 +42,13 @@ class MoviesListAdapter constructor(
             currentItem.isFavorite = true
         }
 
-
         if (currentItem != null) {
             holder.bind(currentItem)
         }
-
-
     }
 
     inner class MoviesListViewHolder(val binding: MovieLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-
-
-
 
         //On click listener to navigate to the details screen
         init {
@@ -76,15 +60,10 @@ class MoviesListAdapter constructor(
                 }
             }
         }
-
         //Favorites feature
         init {
-
             binding.favoritesCheckbox.setOnClickListener {
-
-
                 if (binding.favoritesCheckbox.isChecked) {
-
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
                         val item = getItem(position)
@@ -100,13 +79,9 @@ class MoviesListAdapter constructor(
                             item.isFavorite
                         )
                         listener.onFavoriteClick(fav)
-
-
                     }
 
                     showToast("${fav.title} is added to your favorites")
-
-
                 } else {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
@@ -123,19 +98,12 @@ class MoviesListAdapter constructor(
                             item.isFavorite
                         )
                         listener.onDeleteClick(fav)
-
-
                     }
-
 
                     showToast("${fav.title} is removed from your favorites")
                 }
-
             }
-
-
         }
-
 
         fun bind(movie: MoviesResults.Movies) {
             binding.apply {
@@ -144,30 +112,19 @@ class MoviesListAdapter constructor(
                     .override(223, 382)
                     .error(R.drawable.ic_baseline_error_outline_24)
                     .into(movieImage)
-
-
             }
-
         }
-
 
         private fun showToast(string: String) {
             Toast.makeText(itemView.context, string, Toast.LENGTH_SHORT).show()
-
         }
-
-
     }
-
-
-
 
     interface OnItemClickListener {
         fun onItemClick(movie: MoviesResults.Movies)
         fun onFavoriteClick(fav: MoviesFav)
         fun onDeleteClick(fav: MoviesFav)
     }
-
 
     companion object DiffCallback : DiffUtil.ItemCallback<MoviesResults.Movies>() {
         override fun areItemsTheSame(
@@ -184,8 +141,6 @@ class MoviesListAdapter constructor(
             return oldItem == newItem
         }
     }
-
-
 }
 
 

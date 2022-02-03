@@ -17,74 +17,51 @@ import com.example.moviesapp.ui.MovieApiStatus
 import com.example.moviesapp.ui.MoviesListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MoviesListFragment : Fragment(R.layout.fragment_movies_list),
     MoviesListAdapter.OnItemClickListener {
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
-
 
     private val daoViewModel by viewModels<DaoViewModel>()
     private val viewModel by viewModels<MoviesListViewModel>()
     private var _binding: FragmentMoviesListBinding? = null
     private val binding get() = _binding!!
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
         _binding = FragmentMoviesListBinding.bind(view)
-
         val adapter = MoviesListAdapter(this, daoViewModel)
-
-
-
         binding.apply {
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
             //Disable animations
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
-
         }
-
-
         //Observe movies
         viewModel.moviesTrending.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-
         //Observe network state
-        viewModel.networkState.observe(viewLifecycleOwner, {
+        viewModel.networkState.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = if (it == MovieApiStatus.LOADING) true else view.isGone
             binding.errorTextView.isVisible = if (it == MovieApiStatus.ERROR) true else view.isGone
             binding.recyclerView.isVisible = if (it == MovieApiStatus.DONE) true else view.isGone
-
-        })
-
+        }
         //Observe list of ids
         daoViewModel.idList.observe(viewLifecycleOwner) {
         }
-
     }
 
     override fun onItemClick(movie: MoviesResults.Movies) {
         val action = MoviesListFragmentDirections.actionMoviesListFragmentToMoviesDetailsFragment(
-                movie
-            )
+            movie
+        )
         findNavController().navigate(action)
-
-
     }
 
     override fun onFavoriteClick(fav: MoviesFav) {
@@ -93,24 +70,17 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list),
 
     override fun onDeleteClick(fav: MoviesFav) {
         daoViewModel.deleteMovieFromFavs(fav)
-
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-
         // Inflate the gallery menu
         inflater.inflate(R.menu.menu_gallery, menu)
-
-
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }
 

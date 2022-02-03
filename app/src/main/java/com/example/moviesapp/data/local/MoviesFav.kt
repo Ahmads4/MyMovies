@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 
-
 @Parcelize
 @Entity(tableName = "movies_favorites")
 data class MoviesFav(
@@ -20,6 +19,5 @@ data class MoviesFav(
     @Json(name = "original_language") val original_language: String,
     var isFavorite: Boolean
 ) : Parcelable {
-
 }
 

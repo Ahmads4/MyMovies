@@ -79,7 +79,7 @@ class MoviesDiscoverFragment : Fragment(R.layout.fragment_movies_discover) {
                     viewModel.searchMovies(query)
                     searchView.clearFocus()
                     val action =
-                        MoviesDiscoverFragmentDirections.actionMoviesDiscoverFragmentToMoviesSearch(
+                        MoviesDiscoverFragmentDirections.actionMoviesDiscoverFragmentToMoviesSearchFragment(
                             query
                         )
                     findNavController().navigate(action)

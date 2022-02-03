@@ -24,14 +24,11 @@ object AppModule {
             .baseUrl(MoviesApi.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
     //Method that tells Dagger how to create an instance of the MoviesApi
     @Provides
     @Singleton
     fun provideMoviesApi(retrofit: Retrofit): MoviesApi =
         retrofit.create(MoviesApi::class.java)
-
-
     @Provides
     @Singleton
     fun provideDatabase(application: Application, callback: MoviesRoomDatabase.Callback) =
@@ -39,10 +36,6 @@ object AppModule {
             .databaseBuilder(application, MoviesRoomDatabase::class.java, "movies_database")
             .addCallback(callback)
             .build()
-
-
     @Provides
     fun provideMyDao(db: MoviesRoomDatabase) = db.movieDao()
-
-
 }

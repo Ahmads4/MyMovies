@@ -5,10 +5,9 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 
-
 @Parcelize
 data class MoviesResults(
-    @Json(name="results") val results: List<Movies>,
+    @Json(name = "results") val results: List<Movies>,
 ) : Parcelable {
     @Parcelize
     data class Movies(
@@ -21,8 +20,6 @@ data class MoviesResults(
         @Json(name = "poster_path") val poster_path: String,
         @Json(name = "original_language") val original_language: String,
         var isFavorite: Boolean
-
     ) : Parcelable {
-
     }
 }
